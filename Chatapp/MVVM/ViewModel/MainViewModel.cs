@@ -21,6 +21,8 @@ namespace ChatClient.MVVM.ViewModel
         public string Username { get; set; }
         public string Message { get; set; }
 
+
+
         private Server _server;
 
         public MainViewModel()
@@ -53,6 +55,8 @@ namespace ChatClient.MVVM.ViewModel
         {
             var message = _server.PacketReader.ReadMessage();
             Application.Current.Dispatcher.Invoke(() => Messages.Add(message));
+
+
         }
 
         private void Removeuser()

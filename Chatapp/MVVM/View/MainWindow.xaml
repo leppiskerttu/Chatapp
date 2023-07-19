@@ -6,9 +6,9 @@
         xmlns:local="clr-namespace:Chatapp"
         xmlns:viewmodel="clr-namespace:ChatClient.MVVM.ViewModel"
         mc:Ignorable="d"
-        Title="MainWindow" 
-        Height="474" 
-        Width="816">
+        Title="Chat" 
+        Height="490" 
+        Width="840">
 
     <Window.DataContext>
         <viewmodel:MainViewModel/>
@@ -21,17 +21,23 @@
         </Grid.ColumnDefinitions>
 
         <DockPanel>
-            <TextBox Height="25"
+            <TextBox Height="30"
                      DockPanel.Dock="Top" 
+                     Margin="5"
+                     FontSize="14"
                      Text="{Binding Username, UpdateSourceTrigger=PropertyChanged}"/>
-            <Button Height="25"
+            <Button Height="30"
                     DockPanel.Dock="Top"
+                    Margin="5"
                     Content="Connect"
                     Command="{Binding ConnectToServerCommand}" />
-            <ListView ItemsSource="{Binding Users}" Margin="0,5">
+            <ListView ItemsSource="{Binding Users}" Margin="5">
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <TextBlock Text="{Binding Username}" Margin="10"/>
+                        <StackPanel Orientation="Horizontal">
+                            <Ellipse Width="10" Height="10" Fill="Green" Margin="5"/>
+                            <TextBlock Text="{Binding Username}" Margin="5"/>
+                        </StackPanel>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
@@ -39,26 +45,35 @@
 
         <StackPanel Grid.Column="1">
             <ScrollViewer Height="380">
-                <StackPanel>
-                    <ItemsControl ItemsSource="{Binding Messages}">
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
-                                <Grid>
+                <ItemsControl ItemsSource="{Binding Messages}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Margin="5">
+                                <Grid HorizontalAlignment="Left">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="Auto"/>
-                                        <ColumnDefinition/>
+                                        <ColumnDefinition Width="Auto"/>
                                     </Grid.ColumnDefinitions>
-                                    <Border Grid.Column="0" Background="LightGray" Margin="10" Padding="5" CornerRadius="10">
-                                        <TextBlock Text="{Binding}" TextWrapping="Wrap"/>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                    </Grid.RowDefinitions>
+
+                                    <Path Grid.Column="0" Grid.Row="0" Fill="#e0e0e0" Stretch="Fill"
+                          Data="M0,6 L6,0 L6,6 Z" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+
+                                    <Border Grid.Column="1" Grid.Row="0" Background="#e0e0e0" CornerRadius="5"
+                            Padding="8" Margin="4">
+                                        <TextBlock Text="{Binding}" TextWrapping="Wrap" HorizontalAlignment="Left"/>
                                     </Border>
                                 </Grid>
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>
-                </StackPanel>
+                            </Grid>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
             </ScrollViewer>
-            <StackPanel Orientation="Horizontal" Margin="0,5">
-                <TextBox Height="55" Width="545" VerticalContentAlignment="Center" Text="{Binding Message, UpdateSourceTrigger=PropertyChanged}"/>
+            <StackPanel Orientation="Horizontal" Margin="5">
+                <TextBox Height="55" Width="545" VerticalContentAlignment="Center" Text="{Binding Message, UpdateSourceTrigger=PropertyChanged}"
+                         FontSize="14"/>
                 <Button Width="55" Content="Send" Command="{Binding SendMessageCommand}"/>
             </StackPanel>
         </StackPanel>
